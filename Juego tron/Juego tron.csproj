@@ -50,6 +50,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Grid.cs" />
+    <Compile Include="Itemsqueue.cs" />
+    <Compile Include="Moto.cs" />
+    <Compile Include="Nodos.cs" />
     <Compile Include="NodosGrid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
