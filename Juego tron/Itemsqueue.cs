@@ -15,7 +15,7 @@ public class ItemsQueue
     {
         ItemNode newNode = new ItemNode(effect);
 
-        // Si el efecto es combustible, lo añadimos al frente
+        // Si el efecto es combustible, se añade al frente
         if (effect == 1)
         {
             newNode.Next = front;
@@ -65,7 +65,7 @@ public class ItemsQueue
         if (front == null)
         {
             Console.WriteLine("Queue Underflow");
-            return -1; // Consider throwing an exception instead
+            return -1;
         }
         else
         {

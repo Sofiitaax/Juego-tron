@@ -5,8 +5,8 @@ public class Moto
 {
     private Node head; // Nodo cabeza de la lista
     private int size; // Tamaño de la lista
-    private Random random; // Generador de números aleatorios
-    private Form1 form; // Referencia a la instancia de Form1
+    private Random random; 
+    private Form1 form; 
     private int combustible; // Cantidad de combustible
     private int celdasRecorridas; // Contador de celdas recorridas
     private ItemsQueue itemQueue;
@@ -18,8 +18,8 @@ public class Moto
         this.size = 0;
         this.random = new Random();
         this.form = form;
-        this.combustible = 100; // Inicializar combustible a 100
-        this.celdasRecorridas = 0; // Inicializar contador de celdas recorridas a 0
+        this.combustible = 100; 
+        this.celdasRecorridas = 0; 
         this.itemQueue = new ItemsQueue();
         this.fuelQueue = new ItemsQueue();
     }
@@ -61,14 +61,14 @@ public class Moto
         int speed = random.Next(1, 11);
 
         // Ajusta el intervalo del Timer de movimiento basado en la velocidad generada
-        form.moveTimer.Interval = speed * 100; // Convertir a milisegundos
+        form.moveTimer.Interval = speed * 100;
     }
     public void Combustible()
     {
         // Incrementar el contador de celdas recorridas
         celdasRecorridas++;
 
-        // Cada vez que se recorren 5 celdas, se consume 1 unidad de combustible
+        // Cada vez que se recorren 5 celdas, se gasta 1 unidad de combustible
         if (celdasRecorridas % 5 == 0)
         {
             combustible--;
@@ -77,7 +77,7 @@ public class Moto
         // Si el combustible llega a 0, detener la moto
         if (combustible <= 0)
         {
-            form.moveTimer.Stop(); // Detener el movimiento de la moto
+            form.moveTimer.Stop();
         }
     }
 
@@ -92,12 +92,12 @@ public class Moto
     {
         if (effect == 1)
         {
-            RecogerCombustible(effect); // Tratarlo como combustible
+            RecogerCombustible(effect); 
         }
         else
         {
             itemQueue.Enqueue(effect);
-            AplicarItemsConDelay(); // Aplicar el ítem con delay
+            AplicarItemsConDelay(); 
         }
     }
 
@@ -106,27 +106,25 @@ public class Moto
     {
         if (combustible < 100)
         {
-            // Solo aplicar si el combustible no está lleno
+            // Solo aplicar si el combustible no está en 100
             AplicarEfectoCombustible(fuelAmount);
         }
         else
         {
-            // Si el combustible está lleno, se aplicará más tarde
+            // Si el combustible está lleno, aplicar después
             fuelQueue.Enqueue(fuelAmount);
         }
     }
 
-    // Método para aplicar los ítems en la cola con un delay
+    // Método para aplicar los ítems en la cola con el delay de 1 segundo
     private async void AplicarItemsConDelay()
     {
         while (!itemQueue.IsEmpty())
         {
             int effect = itemQueue.Dequeue();
 
-            // Aplicar el efecto del ítem
             AplicarEfectoItem(effect);
 
-            // Espera de 1 segundo antes de aplicar el siguiente ítem
             await Task.Delay(1000);
         }
     }
@@ -147,12 +145,10 @@ public class Moto
     {
         if (combustible < 100)
         {
-            // Solo aplicar si el combustible no está lleno
             combustible = Math.Min(combustible + fuelAmount, 100);
         }
         else
         {
-            // Si el combustible está lleno, se aplicará más tarde
             fuelQueue.Enqueue(fuelAmount);
         }
     }

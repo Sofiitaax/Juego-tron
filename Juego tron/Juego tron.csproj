@@ -81,5 +81,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\bomba.png" />
+    <Content Include="Properties\escudo.png" />
+    <Content Include="Properties\Estela de luz.png" />
+    <Content Include="Properties\explosion.png" />
+    <Content Include="Properties\fuel.png" />
+    <Content Include="Properties\hipervelocidad.png" />
+    <Content Include="Properties\moto.png" />
+    <Content Include="Properties\motoescudada.png" />
+    <Content Include="Properties\motoveloz.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

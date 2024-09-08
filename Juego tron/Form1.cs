@@ -9,13 +9,13 @@ public partial class Form1 : Form
     private Panel gridPanel;
     private List<PictureBox> motoPictureBoxes;
     private Moto motoList;
-    private int cellWidth = 39;  // Ancho de cada celda
-    private int cellHeight = 39; // Altura de cada celda
-    private int rows = 15;       // Número de filas del grid
-    private int cols = 32;       // Número de columnas del grid
+    private int cellWidth = 39; 
+    private int cellHeight = 39; 
+    private int rows = 15;       
+    private int cols = 32;       
     public Timer moveTimer;     // Timer para mover la moto automáticamente
     private int currentDx = 1;   // Dirección actual en X (por defecto hacia la derecha)
-    private int currentDy = 0;   // Dirección actual en Y (por defecto sin movimiento en Y)
+    private int currentDy = 0;   // Dirección actual en Y (por defecto sin movimiento)
     private Timer itemTimer;
     private int speedUpdateInterval = 5000;
     public static bool isHyperSpeedActive = false;
@@ -44,7 +44,7 @@ public partial class Form1 : Form
         {
             Location = new Point(10, 10),
             Size = new Size(cols * cellWidth, rows * cellHeight),
-            BackColor = Color.Black // Fondo negro para el grid
+            BackColor = Color.Black 
         };
         gridPanel.Paint += GridPanel_Paint;
         this.Controls.Add(gridPanel);
@@ -53,7 +53,7 @@ public partial class Form1 : Form
     private void InitializeMoto()
     {
         motoList = new Moto(this);
-        motoList.Add(0, 0); // Posición inicial de la cabeza de la moto
+        motoList.Add(0, 0); // Posición inicial de la moto
 
         // Generar la velocidad inicial
         motoList.Velocidad();
@@ -76,11 +76,11 @@ public partial class Form1 : Form
         // Inicializar los tres segmentos de la estela
         for (int i = 0; i < 3; i++)
         {
-            motoList.Add(current.X, current.Y); // Agregar tres nodos para la estela
+            motoList.Add(current.X, current.Y);
             PictureBox lightTrail = new PictureBox
             {
-                Size = new Size(cellWidth / 2, cellHeight / 2), // Hacer la estela más delgada
-                Location = new Point(current.X * cellWidth + cellWidth / 4, current.Y * cellHeight + cellHeight / 4), // Centrar la estela
+                Size = new Size(cellWidth / 2, cellHeight / 2),
+                Location = new Point(current.X * cellWidth + cellWidth / 4, current.Y * cellHeight + cellHeight / 4), 
                 BackColor = Color.LightBlue,
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
@@ -97,18 +97,17 @@ public partial class Form1 : Form
 
         // Timer para actualizar la velocidad cada 5 segundos
         Timer speedTimer = new Timer();
-        speedTimer.Interval = speedUpdateInterval; // Intervalo de 5 segundos
-        speedTimer.Tick += (s, e) => motoList.Velocidad(); // Asignar nueva velocidad cada vez
+        speedTimer.Interval = speedUpdateInterval;
+        speedTimer.Tick += (s, e) => motoList.Velocidad(); 
         speedTimer.Start();
 
-        // Mueve la llamada a Velocidad() aquí, después de inicializar el moveTimer
         if (motoList != null)
         {
             motoList.Velocidad(); // Generar velocidad inicial aleatoria
         }
         // Inicializar el timer para generar ítems
         itemTimer = new Timer();
-        itemTimer.Interval = 1000; // Generar un ítem cada 20 segundos
+        itemTimer.Interval = 15000; // Generar un ítem cada 15 segundos
         itemTimer.Tick += (s, e) => GenerateItemPower();
         itemTimer.Start();
 
@@ -127,31 +126,31 @@ public partial class Form1 : Form
             SizeMode = PictureBoxSizeMode.StretchImage
         };
 
-        int itemType = rand.Next(0, 5); // Número aleatorio entre 0 y 4
+        int itemType = rand.Next(0, 5); // Número aleatorio entre 0 y 4 (según el número el item/poder que se genera)
 
         if (itemType == 0) // Ítem de estela
         {
-            itempowerBox.Tag = rand.Next(1, 11); // Valor aleatorio de efecto del ítem de estela
+            itempowerBox.Tag = rand.Next(1, 11); 
             itempowerBox.Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\Estela de luz.png");
         }
         else if (itemType == 1) // Ítem de combustible
         {
-            itempowerBox.Tag = "Fuel:" + rand.Next(1, 11); // Valor aleatorio de efecto de combustible
+            itempowerBox.Tag = "Fuel:" + rand.Next(1, 11);
             itempowerBox.Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\fuel.png");
         }
         else if (itemType == 2) // Bomba
         {
-            itempowerBox.Tag = "Bomb"; // Identificar como bomba
+            itempowerBox.Tag = "Bomb"; 
             itempowerBox.Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\bomba.png");
         }
         else if (itemType == 3) // Escudo
         {
-            itempowerBox.Tag = "Escudo"; // Identificar como escudo
+            itempowerBox.Tag = "Escudo"; 
             itempowerBox.Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\escudo.png");
         }
         else if (itemType == 4) // Hipervelocidad
         {
-            itempowerBox.Tag = "Hipervelocidad"; // Identificar como hipervelocidad
+            itempowerBox.Tag = "Hipervelocidad"; 
             itempowerBox.Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\hipervelocidad.png");
         }
 
@@ -162,26 +161,25 @@ public partial class Form1 : Form
     {
         if (poderes.Count > 0)
         {
-            // Sacar el elemento del tope de la pila
+            // Saca el elemento del tope de la pila
             string poder = poderes.Pop();
 
-            // Guardar temporalmente todos los elementos restantes en una lista
+            // Guarda temporalmente todos los elementos restantes en una lista
             List<string> poderesTemporales = new List<string>();
             while (poderes.Count > 0)
             {
                 poderesTemporales.Add(poderes.Pop());
             }
 
-            // Agregar el poder sacado al fondo de la pila
+            // Agrega el poder sacado al fondo de la pila
             poderes.Push(poder);
 
-            // Volver a agregar los poderes restantes en el orden en que estaban
+            // Agregar de nuevo los poderes restantes en el orden en que estaban
             for (int i = poderesTemporales.Count - 1; i >= 0; i--)
             {
                 poderes.Push(poderesTemporales[i]);
             }
 
-            // Actualizar la interfaz para reflejar los cambios
             UpdatePilaListBox();
         }
     }
@@ -190,10 +188,10 @@ public partial class Form1 : Form
     {
         combustibleLabel = new Label
         {
-            Text = "Combustible: 100", // Texto inicial con valor de combustible
-            Location = new Point(650, 650), // Ubica el Label en la interfaz
+            Text = "Combustible: 100", 
+            Location = new Point(650, 650), 
             AutoSize = true,
-            ForeColor = Color.Black // Color del texto
+            ForeColor = Color.Black 
         };
 
         this.Controls.Add(combustibleLabel);
@@ -222,7 +220,7 @@ public partial class Form1 : Form
         moverPoderButton = new Button
         {
             Text = "Mover Poder",
-            Location = new Point(aplicarPoderButton.Right + 10, aplicarPoderButton.Top)  // Mover el botón a la derecha del botón "Aplicar Poder"
+            Location = new Point(aplicarPoderButton.Right + 10, aplicarPoderButton.Top) 
         };
         moverPoderButton.Click += (s, e) => MoverPoder();
 
@@ -288,7 +286,7 @@ public partial class Form1 : Form
                     {
                         if (!isShieldActive) // Si el escudo no está activo
                         {
-                            // Eliminar la moto inmediatamente
+                            // Eliminar la moto 
                             foreach (var motoPart in motoPictureBoxes)
                             {
                                 gridPanel.Controls.Remove(motoPart);
@@ -296,20 +294,18 @@ public partial class Form1 : Form
                             }
                             motoPictureBoxes.Clear();
 
-                            // Mostrar la explosión
                             PictureBox explosionPictureBox = new PictureBox
                             {
                                 Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\explosion.png"),
                                 SizeMode = PictureBoxSizeMode.StretchImage,
-                                Size = new Size(35, 35), // Ajustar al tamaño deseado
-                                Location = itemBox.Location, // Ubicar en la posición de la bomba
+                                Size = new Size(35, 35), 
+                                Location = itemBox.Location, 
                                 BackColor = Color.Transparent
                             };
 
                             gridPanel.Controls.Add(explosionPictureBox);
                             explosionPictureBox.BringToFront();
 
-                            // Eliminar la bomba y la explosión después de 2.5 segundos
                             Timer explosionTimer = new Timer
                             {
                                 Interval = 2500 // 2.5 segundos
@@ -324,19 +320,16 @@ public partial class Form1 : Form
                                 gridPanel.Controls.Remove(explosionPictureBox);
                                 explosionPictureBox.Dispose();
 
-                                // Detener el temporizador
                                 explosionTimer.Stop();
                             };
                             explosionTimer.Start();
 
                             LiberarPoderes();
 
-                            // Detener el temporizador de movimiento para finalizar el juego
                             moveTimer.Stop();
                         }
                         else
                         {
-                            // Si el escudo está activo, eliminar solo la bomba
                             gridPanel.Controls.Remove(itemBox);
                             itemBox.Dispose();
                         }
@@ -385,7 +378,7 @@ public partial class Form1 : Form
                 {
                     motoPictureBoxes[0].Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\motoescudada.png");
                 }
-                Timer shieldTimer = new Timer { Interval = 15000 }; // 15 segundos
+                Timer shieldTimer = new Timer { Interval = 15000 };
                 shieldTimer.Tick += (s, e) =>
                 {
                     isShieldActive = false;
@@ -406,11 +399,11 @@ public partial class Form1 : Form
                 }
                 int hyperSpeed = 50;
                 moveTimer.Interval = hyperSpeed;
-                Timer speedTimer = new Timer { Interval = 15000 }; // 15 segundos
+                Timer speedTimer = new Timer { Interval = 15000 }; 
                 speedTimer.Tick += (s, e) =>
                 {
                     isHyperSpeedActive = false;
-                    motoList.Velocidad(); // Restablecer la velocidad normal
+                    motoList.Velocidad(); 
                     if (motoPictureBoxes.Count > 0)
                     {
                         motoPictureBoxes[0].Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\moto.png");
@@ -420,11 +413,10 @@ public partial class Form1 : Form
                 speedTimer.Start();
             }
 
-            UpdatePilaListBox(); // Actualizar la interfaz después de aplicar el poder
+            UpdatePilaListBox(); 
         }
     }
 
-    // Método para liberar los poderes en posiciones aleatorias del grid
     public void LiberarPoderes()
     {
         Random rand = new Random();
@@ -456,15 +448,13 @@ public partial class Form1 : Form
             gridPanel.Controls.Add(poderBox);
         }
 
-        UpdatePilaListBox(); // Actualizar la lista de la interfaz después de liberar los poderes
+        UpdatePilaListBox(); 
     }
 
-    // Modificar el método DestruirMoto para liberar los poderes
     private void DestruirMoto(Point location)
     {
         if (!isShieldActive)
         {
-            // Eliminar la moto
             foreach (var motoPart in motoPictureBoxes)
             {
                 gridPanel.Controls.Remove(motoPart);
@@ -472,31 +462,29 @@ public partial class Form1 : Form
             }
             motoPictureBoxes.Clear();
 
-            // Mostrar la explosión
             PictureBox explosionPictureBox = new PictureBox
             {
                 Image = Image.FromFile("C:\\Users\\Usuario\\Desktop\\Datos 1\\Juego tron\\Juego tron\\Resources\\explosion.png"),
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Size = new Size(35, 35), // Ajustar al tamaño deseado
-                Location = location, // Ubicar en la posición de la colisión
+                Size = new Size(35, 35), 
+                Location = location, 
                 BackColor = Color.Transparent
             };
 
             gridPanel.Controls.Add(explosionPictureBox);
             explosionPictureBox.BringToFront();
 
-            // Eliminar la explosión después de 2.5 segundos
+            
             Timer explosionTimer = new Timer
             {
-                Interval = 2500 // 2.5 segundos
+                Interval = 2500 
             };
             explosionTimer.Tick += (s, ev) =>
             {
-                // Eliminar la explosión
+                
                 gridPanel.Controls.Remove(explosionPictureBox);
                 explosionPictureBox.Dispose();
 
-                // Detener el temporizador
                 explosionTimer.Stop();
             };
             explosionTimer.Start();
@@ -504,7 +492,6 @@ public partial class Form1 : Form
             // Liberar los poderes cuando la moto se destruye
             LiberarPoderes();
 
-            // Detener el temporizador de movimiento para finalizar el juego
             moveTimer.Stop();
         }
     }
@@ -522,12 +509,11 @@ public partial class Form1 : Form
         current.Y = (current.Y + dy + rows) % rows;
 
         // Comprobar si la cabeza colisiona con la estela
-        Node checkCollision = motoList.GetHead().Next; // Ignorar la cabeza
+        Node checkCollision = motoList.GetHead().Next; 
         while (checkCollision != null)
         {
             if (checkCollision.X == current.X && checkCollision.Y == current.Y)
             {
-                // Colisión detectada, destruir la moto
                 DestruirMoto(new Point(current.X * cellWidth, current.Y * cellHeight));
                 return;
             }
@@ -551,7 +537,7 @@ public partial class Form1 : Form
             current = current.Next;
         }
 
-        UpdateMotoPosition(); // Actualiza la posición gráfica de la moto
+        UpdateMotoPosition(); // Actualiza la posición de la moto
         motoList.Combustible(); // Actualiza el combustible
         CheckItemCollision(); // Comprueba colisiones con ítems después de mover la moto
         motoList.UsarCombustibleEnCola();
@@ -570,7 +556,6 @@ public partial class Form1 : Form
             index++;
         }
 
-        // Si hay más nodos que PictureBoxes, crear nuevos PictureBoxes para la estela
         while (current != null)
         {
             PictureBox newSegment = new PictureBox
@@ -595,7 +580,6 @@ public partial class Form1 : Form
                 int x = j * cellWidth;
                 int y = i * cellHeight;
 
-                // Dibujar celdas con un borde brillante
                 using (Pen pen = new Pen(Color.Cyan, 2))
                 {
                     e.Graphics.DrawRectangle(pen, x, y, cellWidth, cellHeight);
